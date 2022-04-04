@@ -1,10 +1,12 @@
+import { useContext, useEffect, useState } from 'react'
+
 import { ItemContainer } from './ItemContainer'
 import { ProviderContext } from '@components/provider/MainProvider'
 import styles from '@styles/exoticArmor/MainExoticArmorPage.module.scss'
-import { useContext } from 'react'
 
 export function MainExoticArmorPage() {
    const context = useContext(ProviderContext)
+   const [filteredData, setFilteredData] = useState([])
 
    const itemData = Object.entries(context.descriptions || {}).reduce((acc, [key, perkData]) => {
       if (perkData.type != 'armorExotic') return acc
@@ -32,11 +34,26 @@ export function MainExoticArmorPage() {
       return acc
    }, [] as any)
 
+   const sortedItemData = itemData.sort((a: any, b: any) => a.perk.name.localeCompare(b.perk.name))
+
+   useEffect(() => {
+      setFilteredData(sortedItemData)
+   }, [0])
+
+   const searchFilter = (e: any) => {
+      const search = e.target.value.toLowerCase()
+      const filteredData = sortedItemData.filter((item: any) => item.perk.name.toLowerCase().includes(search))
+      setFilteredData(filteredData)
+   }
+
    return (
-      <div className={styles.container}>
-         {itemData.map((itemData: any, index: number) => (
-            <ItemContainer itemData={itemData} />
-         ))}
-      </div>
+      <>
+         <input onChange={searchFilter}></input>
+         <div className={styles.container}>
+            {filteredData.map((itemData: any, index: number) => (
+               <ItemContainer itemData={itemData} index={index} />
+            ))}
+         </div>
+      </>
    )
 }
