@@ -27,7 +27,9 @@ export function DataProvider({ children }: { children: JSX.Element }) {
       })
    }, [])
 
-   if (!providerData.manifest || !providerData.descriptions) return null
+   if (!providerData.manifest || !providerData.descriptions) return (
+      <div>Loading...</div>
+   )
 
    return (
       <ProviderContext.Provider value={providerData}>
