@@ -1,13 +1,26 @@
-import { useContext, useEffect, useState } from 'react'
+import { ChangeEvent, useContext, useEffect, useState } from 'react'
 
+import { Description } from '@interfaces/descriptions/descriptions'
 import { ItemContainer } from './ItemContainer'
 import { ProviderContext } from '@components/provider/MainProvider'
 import styles from '@styles/exoticArmor/MainExoticArmorPage.module.scss'
 
 export function MainExoticArmorPage() {
    const context = useContext(ProviderContext)
-   const [filteredData, setFilteredData] = useState([])
+   const [filteredData, setFilteredData] = useState([] as ItemData[])
 
+   interface ItemData {
+      className: string
+      perk: {
+         name: string
+         img?: string
+      }
+      item: {
+         name?: string
+         img?: string
+      }
+      description?: Description[]
+   }
    const itemData = Object.entries(context.descriptions || {}).reduce((acc, [key, perkData]) => {
       if (perkData.type != 'armorExotic') return acc
       const classTypeId = context.manifest.DestinyInventoryItemDefinition[perkData.itemId || 0]?.classType
@@ -32,17 +45,19 @@ export function MainExoticArmorPage() {
       })
 
       return acc
-   }, [] as any)
+   }, [] as ItemData[])
 
-   const sortedItemData = itemData.sort((a: any, b: any) => a.perk.name.localeCompare(b.perk.name))
+
+
+   const sortedItemData = itemData.sort((a, b) => a.perk.name.localeCompare(b.perk.name))
 
    useEffect(() => {
       setFilteredData(sortedItemData)
    }, [0])
 
-   const searchFilter = (e: any) => {
+   const searchFilter = (e: ChangeEvent<HTMLInputElement>) => {
       const search = e.target.value.toLowerCase()
-      const filteredData = sortedItemData.filter((item: any) => item.perk.name.toLowerCase().includes(search))
+      const filteredData = sortedItemData.filter((item) => item.perk.name.toLowerCase().includes(search))
       setFilteredData(filteredData)
    }
 
@@ -50,7 +65,7 @@ export function MainExoticArmorPage() {
       <>
          <input onChange={searchFilter}></input>
          <div className={styles.container}>
-            {filteredData.map((itemData: any, index: number) => (
+            {filteredData.map((itemData, index) => (
                <ItemContainer itemData={itemData} index={index} />
             ))}
          </div>

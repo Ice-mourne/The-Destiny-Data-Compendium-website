@@ -1,6 +1,9 @@
 .container {
    display: grid;
-   grid-template-columns: [titan] 33% [hunter] 33% [warlock] 33%;
+   grid-template-columns: [titan] calc(100% / 3) [hunter] calc(100% / 3) [warlock] calc(100% / 3);
+   @media (max-width: 767.98px) {
+      grid-template-columns: 100%;
+   }
    grid-auto-flow: dense;
    gap: 10px;
    background-color: black;
@@ -53,15 +56,24 @@
 
 .titan {
    grid-column: titan;
+   @media (max-width: 767.98px) {
+      grid-column: unset;
+   }
    background-color: #8f3f3f;
 }
 
 .hunter {
    grid-column: hunter;
+   @media (max-width: 767.98px) {
+      grid-column: unset;
+   }
    background-color: #32586f;
 }
 
 .warlock {
    grid-column: warlock;
+   @media (max-width: 767.98px) {
+      grid-column: unset;
+   }
    background-color: #79715a;
 }

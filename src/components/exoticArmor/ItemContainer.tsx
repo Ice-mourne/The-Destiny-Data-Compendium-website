@@ -1,7 +1,7 @@
 import { Description } from '@components/descriptions/Descriptions'
 import styles from '@styles/exoticArmor/MainExoticArmorPage.module.scss'
 
-export function ItemContainer({ itemData, index }: any) {
+export function ItemContainer({ itemData, index }: { itemData: any; index: number }) {
    return (
       <div className={`${styles.itemContainer} ${styles[itemData.className]}`} key={index}>
          <div className={styles.nameImg}>
