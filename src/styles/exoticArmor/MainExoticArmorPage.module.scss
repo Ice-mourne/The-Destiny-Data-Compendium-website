@@ -1,9 +1,6 @@
 .container {
    display: grid;
    grid-template-columns: [titan] calc(100% / 3) [hunter] calc(100% / 3) [warlock] calc(100% / 3);
-   @media (max-width: 767.98px) {
-      grid-template-columns: 100%;
-   }
    grid-auto-flow: dense;
    gap: 10px;
    background-color: black;
@@ -11,9 +8,9 @@
 }
 
 .itemContainer {
-   flex: 1 1 33%;
    display: flex;
    flex-direction: row;
+   align-items: center;
 }
 
 .nameImg {
@@ -56,24 +53,34 @@
 
 .titan {
    grid-column: titan;
-   @media (max-width: 767.98px) {
-      grid-column: unset;
-   }
    background-color: #8f3f3f;
 }
 
 .hunter {
    grid-column: hunter;
-   @media (max-width: 767.98px) {
-      grid-column: unset;
-   }
    background-color: #32586f;
 }
 
 .warlock {
    grid-column: warlock;
-   @media (max-width: 767.98px) {
+   background-color: #79715a;
+}
+@media (max-width: 767.98px) {
+   .container {
+      grid-template-columns: 100%;
+   }
+   .itemContainer {
+      flex-direction: column;
+   }
+   .nameImg {
+      width: unset;
+   }
+   .description {
+      width: unset;
+   }
+   .titan,
+   .hunter,
+   .warlock {
       grid-column: unset;
    }
-   background-color: #79715a;
 }

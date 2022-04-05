@@ -28,7 +28,10 @@ export function DataProvider({ children }: { children: JSX.Element }) {
    }, [])
 
    if (!providerData.manifest || !providerData.descriptions) return (
-      <div>Loading...</div>
+      <div>
+         <h1>Loading...</h1>
+         <h3>Adblock can cause problems if its not loaded in 10-15s turn off adblock</h3>
+      </div>
    )
 
    return (
